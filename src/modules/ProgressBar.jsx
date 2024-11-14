@@ -1,46 +1,39 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "./ProgressBar.css";
 import PlusButton from "./PlusButton.jsx";
-import energyImage from "/EnergyImage.svg";
 
-const ProgressBar = () => {
+const ProgressBar = ({
+                         energyImageSrc = "/EnergyImageBlue.svg",
+                         energyImageBackground = ["#0C2442", "#3B377D"],
+                         borderGradient = ["#06213B", "#413880"],
+                         progressFillGradient = ["#CE70FF", "#9A3BFF"],
+                         mountainGradient = ["#F4ABFF", "#D693FF"],
+                         bgColors=["#8FC843", "#C7DC55"],
+                         borderColor="#D5FFB4",
+                         fillColor="#260E18",
+                         boxShadow="0px 4px 0px #461A8B, 0px 7px 31.8px #D15ACC"
+                     }) => {
     const [progress, setProgress] = useState(0);
 
-    const handleIncreaseProgress = () => {
-        setProgress((prev) => (prev + 10 <= 100 ? prev + 10 : 100));
-    };
-
-    const handleDecreaseProgress = () => {
-        setProgress((prev) => (prev - 10 <= 100 ? prev - 10 : 100));
-    };
-
-    const handleResetProgress = () => {
-        setProgress(0);
-    };
-
-    const stars = [
-        {id: 1, className: "star1", position: {top: "25%", left: "5%"}, size: 5, image: "/Shine.svg"},
-        {id: 2, className: "star2", position: {bottom: "15%", right: "10%"}, size: 15, image: "/StarShining.svg"},
-    ];
-
-
-
-    const progressFill = ["#CE70FF", "#9A3BFF"];
-    const gradientStartColor  = "#F4ABFF";
-    const gradientEndColor = "#D693FF";
-    const borderGradient = ["#06213B", "#413880"];
-    const energyImageBackground =["#0C2442", "#3B377D"];
-
-
+    const handleIncreaseProgress = () => setProgress((prev) => (prev + 10 <= 100 ? prev + 10 : 100));
+    const handleDecreaseProgress = () => setProgress((prev) => (prev - 10 <= 100 ? prev - 10 : 100));
+    const handleResetProgress = () => setProgress(0);
+    const starsConfig = [
+        { id: 1, className: "star1", position: { top: "25%", left: "5%" }, size: 5, image: "/Shine.svg" },
+        { id: 2, className: "star2", position: { bottom: "15%", right: "10%" }, size: 15, image: "/StarShining.svg" },
+    ]
 
     return (
         <div className="ProgressPage">
             <div className="bar">
-                <div className="energy-image" style={{
-                    background: `linear-gradient(180deg, ${energyImageBackground[0]} 0%, ${energyImageBackground[1]} 100%)`,
-                }}>
-                    <img src={energyImage} alt="Energy Icon"/>
-                    {stars.map((star) => (
+                <div
+                    className="energy-image"
+                    style={{
+                        background: `linear-gradient(180deg, ${energyImageBackground[0]} 0%, ${energyImageBackground[1]} 100%)`,
+                    }}
+                >
+                    <img src={energyImageSrc} alt="Energy Icon" />
+                    {starsConfig.map((star) => (
                         <div
                             key={star.id}
                             className={`star ${star.className}`}
@@ -54,27 +47,21 @@ const ProgressBar = () => {
                     ))}
                 </div>
 
-                <div className="progress-bar-wrapper"    style={{
-                    background: `linear-gradient(180deg, ${borderGradient[0]} 0%, ${borderGradient[1]} 100%)`,
-                }}>
-
-                    <div className="progress-bar" style={{
+                <div
+                    className="progress-bar-wrapper"
+                    style={{
                         background: `linear-gradient(180deg, ${borderGradient[0]} 0%, ${borderGradient[1]} 100%)`,
-                    }}>
-
+                    }}
+                >
+                    <div className="progress-bar">
                         <div
                             className="progress-fill"
                             style={{
                                 width: `${progress}%`,
-                                background: `linear-gradient(180deg, ${progressFill[0]} 0%, ${progressFill[1]} 100%)`,
+                                background: `linear-gradient(180deg, ${progressFillGradient[0]} 0%, ${progressFillGradient[1]} 100%)`,
                             }}
                         ></div>
-                        <div
-                            className="mountain"
-                            style={{
-                                width: `${progress}%`,
-                            }}
-                        >
+                        <div className="mountain" style={{ width: `${progress}%` }}>
                             <svg
                                 width="227"
                                 height="20"
@@ -83,8 +70,8 @@ const ProgressBar = () => {
                             >
                                 <defs>
                                     <linearGradient id="fixedGradient" x1="0" y1="0" x2="1" y2="0">
-                                        <stop offset="0%" stopColor={gradientStartColor}/>
-                                        <stop offset="100%" stopColor={gradientEndColor}/>
+                                        <stop offset="0%" stopColor={mountainGradient[0]} />
+                                        <stop offset="100%" stopColor={mountainGradient[1]} />
                                     </linearGradient>
                                 </defs>
                                 <path
@@ -94,15 +81,13 @@ const ProgressBar = () => {
                             </svg>
                         </div>
                     </div>
-
                 </div>
 
-
                 <PlusButton
-                    bgColors={["#8FC843", "#C7DC55"]}
-                    borderColor="#D5FFB4"
-                    fillColor="#260E18"
-                    boxShadow="0px 4px 0px #461A8B, 0px 7px 31.8px #D15ACC"
+                    bgColors={bgColors}
+                    borderColor={borderColor}
+                    fillColor={fillColor}
+                    boxShadow={boxShadow}
                 />
             </div>
 
@@ -116,7 +101,3 @@ const ProgressBar = () => {
 };
 
 export default ProgressBar;
-
-
-
-
